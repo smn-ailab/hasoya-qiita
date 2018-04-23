@@ -5,7 +5,7 @@ function getBalance(user) {
   */
 
   // Find the user index
-  var userIndex = getUserIndex([user])[user]
+  const userIndex = getUserIndex([user])[user]
 
   // Get balance using index
   var balance = NaN
@@ -21,7 +21,7 @@ function checkBalance(user) {
   Return response text for `/check_balance` command.
   */
 
-  var balance = getBalance(user)
+  const balance = getBalance(user)
 
   var resultText = ""
   if (isNaN(balance)) {

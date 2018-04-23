@@ -18,11 +18,11 @@ function getUserIndex(users) {
   Return associative array of {"user": "index in Google Sheets"}.
   If not found, the value becomes NaN.
   */
-  var sheet = getLedger()
-  var memberList = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues()
+  const sheet = getLedger()
+  const memberList = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues()
 
   // Find user from "users" and push them to "userIndex" associative array
-  var userIndex = {}
+  const userIndex = {}
   for (var u in users) {
     userIndex[users[u]] = NaN // Set default value
     for (var m in memberList) {

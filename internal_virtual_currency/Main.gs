@@ -7,10 +7,10 @@ function doPost(e)
   }
 
   // This is response format
-  var response = { text: "" };
+  const response = { text: "" };
 
   // Parse arguments and check them
-  var commandParams = e.parameter.text.trim().replace(/\s\s+/g, ' ').split(" ") // string.split does not support regex...
+  const commandParams = e.parameter.text.trim().replace(/\s\s+/g, ' ').split(" ") // string.split does not support regex...
 
   // Switch process by command
   switch(e.parameter.command){

@@ -1,43 +1,43 @@
 function sendCoin(sender, params) {
-  var FORMAT = "/send_coin [amount] [recipient]+"
+  const FORMAT = "/send_coin [amount] [recipient]+"
 
   // Result text
   var resultText = ""
 
   // Interpret arguments
-  var amount = parseInt(params[0])
-  var recipients = params.slice(start=1).map(removeFirstAtSign)
+  const amount = parseInt(params[0])
+  const recipients = params.slice(start=1).map(removeFirstAtSign)
 
   if (isNaN(amount)) { // Given amount is not a number
     resultText = Utilities.formatString("%d is not Integer, Follow this: %s", params[0], FORMAT)
   } else {
     // Get current bank status
-    var senderBalance = getBalance(sender)
+    const senderBalance = getBalance(sender)
     if (isNaN(senderBalance)) { // This user is not found.
       resultText = userNotFound(sender)
     } else if (senderBalance < amount * recipients.length) { // Do not have enough coin
       resultText = Utilities.formatString("You have only %d, and cannot pay %d in total.",
                                            senderBalance, amount * recipients.length)
     } else { // Send coin!
-      var userIndex = getUserIndex(recipients.concat([sender]))
+      const userIndex = getUserIndex(recipients.concat([sender]))
 
-      var notFoundUsers = [] // If a recipient does not have acccount yet, notify later.
-      var ledger = getLedger()
+      const notFoundUsers = [] // If a recipient does not have acccount yet, notify later.
+      const ledger = getLedger()
       for (var i in recipients) { // Add coins to each recipient
-        var r = recipients[i]
+        const r = recipients[i]
         if (isNaN(userIndex[r])) { // Not member yet.
           notFoundUsers.push(r)
         } else {
-          var v = ledger.getRange(userIndex[r], 2).getValue()
+          const v = ledger.getRange(userIndex[r], 2).getValue()
           ledger.getRange(userIndex[r], 2).setValue(v + amount)
         }
       }
 
       // Subtract total amount of sent coins
-      var v = ledger.getRange(userIndex[sender], 2).getValue()
-      var numPayedUsers = recipients.length - notFoundUsers.length
-      var payment = amount * numPayedUsers
-      ledger.getRange(userIndex[sender], 2).setValue(v - payment) // Update balance
+      const current = ledger.getRange(userIndex[sender], 2).getValue()
+      const numPayedUsers = recipients.length - notFoundUsers.length
+      const payment = amount * numPayedUsers
+      ledger.getRange(userIndex[sender], 2).setValue(current - payment) // Update balance
 
       resultText = Utilities.formatString("You successfully payed %d in total to %d users.",
                                           payment, numPayedUsers)
