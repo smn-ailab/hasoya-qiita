@@ -26,7 +26,7 @@ function getUserIndex(users) {
   for (var u in users) {
     userIndex[users[u]] = NaN // Set default value
     for (var m in memberList) {
-      if (users[u] == memberList[m][0]) { // User found in the member list
+      if (users[u] === memberList[m][0]) { // User found in the member list
         userIndex[users[u]] = parseInt(m) + 2 // +2 because the sheet has the header row and Google Sheet is 1-origin.
       }
     }
