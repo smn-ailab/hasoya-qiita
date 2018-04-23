@@ -35,12 +35,12 @@ function sendCoin(sender, params) {
 
       // Subtract total amount of sent coins
       const current = ledger.getRange(userIndex[sender], 2).getValue()
-      const numPayedUsers = recipients.length - notFoundUsers.length
-      const payment = amount * numPayedUsers
+      const numpaidUsers = recipients.length - notFoundUsers.length
+      const payment = amount * numpaidUsers
       ledger.getRange(userIndex[sender], 2).setValue(current - payment) // Update balance
 
-      resultText = Utilities.formatString("You successfully payed %d in total to %d users.",
-                                          payment, numPayedUsers)
+      resultText = Utilities.formatString("You successfully paid %d in total to %d users.",
+                                          payment, numpaidUsers)
 
       if (notFoundUsers.length > 0) { // Could not pay coins to some of them
         resultText += Utilities.formatString("\n%s are not registered yet. Please invite them and make them try `/create_account` .",
